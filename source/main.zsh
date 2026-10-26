@@ -27,11 +27,13 @@ function gettime () {
 
   if [[ $mode == 't' ]] {
     # [[CC]YY]MMDDhhmm[.SS]
-    strftime '%0Y%0m%0d%0H%0M.%0S' "$timestamp"
+    strftime -n '%0Y%0m%0d%0H%0M.%0S' "$timestamp"
   } else {
     # YYYY-MM-DDThh:mm:SS[.frac][tz]
-    strftime '%0Y-%0m-%0dT%0H:%0M:%0S' "$timestamp"
+    strftime -n '%0Y-%0m-%0dT%0H:%0M:%0S' "$timestamp"
   }
+
+  if [[ -t 1 ]] echo # if printing to a tty, add a newline after the output
 }
 
 if [[ "$ZSH_EVAL_CONTEXT" == 'toplevel' ]] gettime "$@"
